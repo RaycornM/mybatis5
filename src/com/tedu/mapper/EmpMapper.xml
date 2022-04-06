@@ -63,6 +63,45 @@
   </select>
   
   <!-- public int updateEmp(EmpBean bean); -->
-  <update id="updateEmp" parameterType="com.tedu.bean.EmpBean" ></update>
-  	update emp set name=#{name},sex=#{sex},salary=#{salary} where id = #{id}
+  <update id="updateEmp" parameterType="com.tedu.bean.EmpBean" >
+  	update emp 
+  	<set> 
+  		<if test = "name != null">
+  			name=#{name},
+  		</if>
+  		<if test = "sex != 0">
+  			sex=#{sex},
+		</if>
+		<!-- set标签中，判定会自动为最后一个字段减少逗号 -->
+ 		<if test="salary != 0">
+ 			salary=#{salary} 
+ 		</if>
+ 	</set>
+  	where id = #{id};
+  	</update>
+  	
+  	<!-- public int insertEmp(EmpBean bean); -->
+  	<insert id="insertEmp" parameterType="com.tedu.bean.EmpBean" >
+  		insert into emp
+		<trim prefix="(" suffix=")" prefixOverrides="" suffixOverrides=",">
+				name
+			<if test="sex != 0">
+				sex,
+			</if>
+			<if test="salary != 0">
+				salary,
+			</if>
+		</trim>
+  		value
+  		<trim prefix="(" suffix=")" prefixOverrides="" suffixOverrides=",">
+				#{name},
+			<if test="sex != 0">
+				#{sex},
+			</if>
+			<if test="salary != 0">
+				#{salary},
+			</if>
+		</trim>
+  	</insert>
+  	
 </mapper>

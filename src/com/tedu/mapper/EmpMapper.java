@@ -31,4 +31,7 @@ public interface EmpMapper {
 	//修改 update emp set name=?,sex=?,salary=? where id = ?
 	public int updateEmp(EmpBean bean); //Map  看上层代码怎么编写
 	
+	//插入语句 insert into emp(name,sex) value(?,?)
+	public int insertEmp(EmpBean bean);
+	
 }

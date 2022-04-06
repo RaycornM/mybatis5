@@ -29,6 +29,14 @@
 以下标签都是为能动态生成sql语句而存在的
 where标签：标签内如果有数据是有效的，那么会自动为sql语句加上where
 if标签 = "list != null and list.size>0" 里面写判定，和java编程的差别不大
+set标签：作用是在于update中可以对多个修改进行判定，并且对于最后一个修改的逗号可以帮忙去除
+
+trim
+<trim prefix="(" suffix=")" prefixOverrides="" suffixOverrides="">
+prefix是连接字符串的前缀 suffix是连接字符串的后缀
+prefixOverrides是字符串连接的时候可以删除的前缀关键字
+suffixOverrides是字符串连接的时候可以删除的后缀关键字
+
 <foreach //代表迭代是进行循环
 	collection="list" //需要循环的集合
 	open="id in(" //循环数据的总前缀（开始循环前要写的代码）

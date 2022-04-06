@@ -75,5 +75,30 @@ public class TestMapper extends SuperTestMapper{
 			System.out.println(beans);
 		}
 	}
+	
+	@Test
+	public void TestG() {
+		EmpMapper mapper = session.getMapper(EmpMapper.class);
+		List<EmpBean> list = mapper.selectEmpByName("Èý");
+		EmpBean bean = list.get(0);
+		System.out.println(bean);
+		bean.setName("abcd");
+		bean.setSex(3);
+		mapper.updateEmp(bean);
+		session.commit();
+		System.out.println("11111");
+	}
+	
+	@Test
+	public void TestH() {
+		EmpMapper mapper = session.getMapper(EmpMapper.class);
+		EmpBean bean = new EmpBean();
+		bean.setName("qwer11");
+		bean.setSalary(0);
+		bean.setSex(0);
+		mapper.insertEmp(bean);
+		session.commit();
+		System.out.println(bean);
+	}
 }
 
