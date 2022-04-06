@@ -1,0 +1,56 @@
+编写测试代码过程中，会出现前置和后置
+例如：需要使用的对象是SqlSession；
+	  前置任务就是要实例化这个对象
+	  后置任务就是关闭这个close()
+采用继承的方式来做我们的测试类
+		父类中定义 SqlSession
+		同时在父类中完成对象的初始化
+		子类直接使用
+在mybatis中传入值有两种方式
+1.
+	#{} 占位符 insert int emp(a,b) value(?,?)
+	${} 拼接符 insert int emp(a,b) value('abc','efg')abc进行替换 sql拼接
+2.
+	#{}：动态解析 -> 预编译 -> 执行
+	${}：动态解析 -> 编译 -> 执行
+3.变量替换
+	#{}替换会自动为替换的值添加单引号
+	${}替换不会自动为替换的值加单引号
+4.
+	#{}可以防止sql注入
+	${}不可以防止，和传统的jdbc一致
+5.使用${name}要和对象一起使用，因为需要调用getName()方法
+	原理：jdbc中我们常用的链接字符串方式 例如：value('"+obj.getName()+"','"+obj.getAge()+"')
+	如果是单个使用，那么没有get()方法调用，所以报错就是get方法无法在java.lang.String中使用
+	例如：全文检索；name、文本
+	传入对象必须是一个对象，不能是单个使用的变量
+	select * from emp where name like '%${}%' or title like '%${}%'
+	
+以下标签都是为能动态生成sql语句而存在的
+where标签：标签内如果有数据是有效的，那么会自动为sql语句加上where
+if标签 = "list != null and list.size>0" 里面写判定，和java编程的差别不大
+<foreach //代表迭代是进行循环
+	collection="list" //需要循环的集合
+	open="id in(" //循环数据的总前缀（开始循环前要写的代码）
+	close=")" //最后一个循环结束的时候写的代码
+	item="id" //list循环中的对象的引用
+	separator=","> //循环过程中两个对象之间的分隔符
+</foreach>
+
+定义公用的sql语句
+<sql id="selectEmp">
+		select * from emp
+	</sql>
+	
+用于引入公用的sql语句  注意refid的路径问题 mapper的namespace+标签的id
+<include refid="com.tedu.mapper.EmpMapper.listForeach"></include>
+
+mapper中传入list和array(int[])
+注意事项：在select等标签中 parameterType=”List” 都是等于list
+		 在if判定中  list.size长度  array.length长度
+		 在foreach中的collection="" list是"list" array是"array"
+		 其他使用都一样
+
+
+
+

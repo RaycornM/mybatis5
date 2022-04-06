@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 使用properties来读取配置文件 -->
+	<properties resource="mybatis.pro"></properties>
+
+  <!-- 环境 使用   default="单数标签id" 表示默认使用那个环境   -->
+  <environments default="development">
+  <!-- 单个 环境 -->
+    <environment id="development">
+    <!-- transaction(事务) type=JDBC事务.提交和回滚事务 -->
+      <transactionManager type="JDBC"/>
+      <!-- 使用的连接池的数据源   type="" -->
+      <dataSource type="POOLED">
+      <!-- 4元素   driver url username  password 4个单词不可变 
+           他们是采用 set注入的方式进行写入到链接对象中的
+      -->
+      <!-- 读取环境变量  需要在xml中读取 mybatis.pro,将里面的key和value变为环境变量 -->
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <!-- 填写自己的 -->
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <!-- 映射文件 -->
+  <mappers>
+   	<mapper  resource="com/tedu/mapper/EmpMapper.xml"/>
+  </mappers>
+</configuration>
+
+
+
+
+
+

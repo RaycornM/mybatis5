@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.mapper.EmpMapper">
+<!-- public List<EmpBean> selectOrderByName(String name); -->
+  <select id="selectOrderByName" 
+  			parameterType="string" 
+  			resultType="com.tedu.bean.EmpBean">
+  	select * from emp order by name
+  </select>
+  
+  <!-- public List<EmpBean> selectEmpByName(String name);
+  	   '%${name}%' -->
+  <select id="selectEmpByName" parameterType="string" resultType="com.tedu.bean.EmpBean">
+  	select * from emp where name like concat('%',#{name},'%');
+  </select>
+  
+  <!-- select * from emp where name like concat('%',?,'%'); -->
+  <!-- select * from emp where name like '%三%'; -->
+  <!-- public List<EmpBean> selectLike(EmpBean bean); -->
+  <select id="selectLike" parameterType="com.tedu.bean.EmpBean" resultType="com.tedu.bean.EmpBean">
+  	select * from emp where name like '%${name}%';
+  </select>
+  
+  <!-- public List<EmpBean> selectMapLike(Map<String,Object> map); 
+  	   name 和 sex -->
+  <select id="selectMapLike" parameterType="Map" resultType="com.tedu.bean.EmpBean">
+  	select * from emp where sex = #{sex} and name like '%${name}%';
+  </select>
+  
+  <sql id="listForeach">
+  	<where>
+		<if test="list != null and list.size>0">
+			<foreach collection="list" open="id in(" close=")" item="id" separator="," >
+				${id}
+			</foreach>
+		</if>
+	</where>
+	</sql>
+	<sql id="selectEmp">
+		select * from emp
+	</sql>
+  
+  <!-- select * from emp where id in (1,3,5);
+	public List<EmpBean> selectIn(List<Object> list); -->
+	<select id="selectIn" parameterType="list" resultType="com.tedu.bean.EmpBean">
+		<include refid="com.tedu.mapper.EmpMapper.selectEmp"></include>
+		<include refid="com.tedu.mapper.EmpMapper.listForeach"></include>
+	</select>
+  
+  <!-- public List<EmpBean> setcetInarr(int [] arr); -->
+  <select id="setcetInarr" parameterType="list" resultType="com.tedu.bean.EmpBean">
+  	<include refid="com.tedu.mapper.EmpMapper.selectEmp"></include>
+  	<where>
+		<if test="array != null">
+			<foreach collection="array" open="id in(" close=")" item="id" separator="," >
+				${id}
+			</foreach>
+		</if>
+	</where>
+  </select>
+  
+</mapper>
