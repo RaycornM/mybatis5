@@ -53,6 +53,7 @@
   <select id="setcetInarr" parameterType="list" resultType="com.tedu.bean.EmpBean">
   	<include refid="com.tedu.mapper.EmpMapper.selectEmp"></include>
   	<where>
+  	<!-- and or 不是 && || -->
 		<if test="array != null">
 			<foreach collection="array" open="id in(" close=")" item="id" separator="," >
 				${id}
@@ -60,5 +61,8 @@
 		</if>
 	</where>
   </select>
+  
+  <!-- public int updateEmp(EmpBean bean); -->
+  <update id="updateEmp" parameterType="com.tedu.bean.EmpBean" ></update>
   
 </mapper>

@@ -28,4 +28,7 @@ public interface EmpMapper {
 	//in查询 传入对象是数组
 	public List<EmpBean> setcetInarr(int [] arr);
 	
+	//修改 update emp set name=?,sex=?,salary=? where id = ?
+	public int updateEmp(EmpBean bean); //Map  看上层代码怎么编写
+	
 }
