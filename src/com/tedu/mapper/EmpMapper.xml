@@ -64,5 +64,5 @@
   
   <!-- public int updateEmp(EmpBean bean); -->
   <update id="updateEmp" parameterType="com.tedu.bean.EmpBean" ></update>
-  
+  	update emp set name=#{name},sex=#{sex},salary=#{salary} where id = #{id}
 </mapper>
